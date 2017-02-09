@@ -1,9 +1,9 @@
 package rest;
 
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+
+import org.glassfish.jersey.server.ResourceConfig;
 
 @ApplicationPath("/rest")
-public class AppConfig extends Application {
-
+public class AppConfig extends ResourceConfig {
 }
