@@ -10,25 +10,44 @@ import javax.ws.rs.QueryParam;
 public class PasswordService {
 	
 	@POST
-	public String testPassword(@FormParam("brugernavn") String brugernavn, @FormParam("password") String password){
-		System.out.println(brugernavn + password);
-		return ("test".equals(password) && "test".equals(brugernavn)) ?
-			"Passwordet er korrekt" : "Passwordet er forkert";
+	public String testPassword(String userPass){
+		String returnString = null;
+		if (userPass!= null){
+			String[] userPassArray = userPass.split(" ");
+			if (userPassArray.length==2){
+				returnString = testUserAndPass(userPassArray[0], userPassArray[1]);
+			}
+			returnString = "Wrong number of arguments";
+		}
+		return returnString;
+	}
+	
+	@POST
+	@Path("form")
+	public String testPasswordForm(@FormParam("username") String username, @FormParam("password") String password){
+		System.out.println(username + password);
+		return testUserAndPass(username, password);
 	}
 	
 	@Path("query")
 	@POST
 	public String testQueryPassword(
-			@QueryParam("brugernavn") String brugernavn, 
+			@QueryParam("username") String username, 
 			@QueryParam("password") String password){
-		return testPassword(brugernavn, password);
+		return testUserAndPass(username, password);
 	}
-	@Path("{brugernavn}/{password}")
+	@Path("{username}/{password}")
 	@POST
 	public String testPathPassword(
-			@PathParam("brugernavn") String brugernavn,
+			@PathParam("username") String username,
 			@PathParam("password") String password){
-		return this.testPassword(brugernavn, password);
+		return testUserAndPass(username, password);
+	}
+	
+	private String testUserAndPass(String username, String password) {
+		if (username==null || password==null) return "parameter mangler";
+		return ("test".equals(password) && "test".equals(username)) ?
+			"Passwordet er korrekt" : "Passwordet er forkert";
 	}
 
 }
