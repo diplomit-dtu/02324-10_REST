@@ -10,10 +10,10 @@ import javax.ws.rs.QueryParam;
 public class PasswordService {
 
 	@POST
-	public String testPassword(String userPass){
+	public String testPassword(String body){
 		String returnString = null;
-		if (userPass!= null){
-			String[] userPassArray = userPass.split(" ");
+		if (body!= null){
+			String[] userPassArray = body.split(" ");
 			if (userPassArray.length==2){
 				returnString = testUserAndPass(userPassArray[0], userPassArray[1]);
 			} else {
