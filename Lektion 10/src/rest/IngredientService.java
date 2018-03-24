@@ -33,7 +33,23 @@ public class IngredientService {
 
     @POST
     @Path("form")
-    public String addIngredient(@FormParam("id") String id, @FormParam("name") String name, @FormParam("amount") String amount) {
+    public String addIngredientForm(@FormParam("id") String id, @FormParam("name") String name, @FormParam("amount") String amount) {
+        return addIngredient(id,name,amount);
+    }
+
+    @POST
+    @Path("query")
+    public String addIngredientQuery(@QueryParam("id") String id, @QueryParam("name") String name, @QueryParam("amount") String amount) {
+        return addIngredient(id,name,amount);
+    }
+
+    @POST
+    @Path("{id}/{name}/{amount}")
+    public String addIngredientPath(@PathParam("id") String id, @PathParam("name") String name, @PathParam("amount") String amount) {
+        return addIngredient(id,name,amount);
+    }
+
+    private String addIngredient(String id, String name, String amount){
         IngredientDTO ingredient = new IngredientDTO(Integer.parseInt(id), name, Double.parseDouble(amount));
         IngredientDAO.getInstance().addIngredient(ingredient);
 
@@ -42,7 +58,7 @@ public class IngredientService {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public String addIngredient(String body) {
+    public String addIngredientJson(String body) {
         JSONObject jsonObject = new JSONObject(body);
         IngredientDTO ingredient = new IngredientDTO(jsonObject.getInt("id"), jsonObject.getString("name"), jsonObject.getDouble("amount"));
         IngredientDAO.getInstance().addIngredient(ingredient);
