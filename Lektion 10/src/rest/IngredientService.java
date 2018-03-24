@@ -32,6 +32,7 @@ public class IngredientService {
     }
 
     @POST
+    @Path("form")
     public String addIngredient(@FormParam("id") String id, @FormParam("name") String name, @FormParam("amount") String amount) {
         IngredientDTO ingredient = new IngredientDTO(Integer.parseInt(id), name, Double.parseDouble(amount));
         IngredientDAO.getInstance().addIngredient(ingredient);
