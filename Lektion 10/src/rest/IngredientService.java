@@ -39,7 +39,17 @@ public class IngredientService {
 
         return "Ingredient added";
     }
-    
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String addIngredient(String body) {
+        JSONObject jsonObject = new JSONObject(body);
+        IngredientDTO ingredient = new IngredientDTO(jsonObject.getInt("id"), jsonObject.getString("name"), jsonObject.getDouble("amount"));
+        IngredientDAO.getInstance().addIngredient(ingredient);
+
+        return "Ingredient added";
+    }
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public String setIngredient(String body) {
