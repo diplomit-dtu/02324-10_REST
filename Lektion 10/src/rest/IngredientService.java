@@ -63,32 +63,4 @@ public class IngredientService {
         return "Ingredient added";
     }
 
-    @POST
-    /*Variablerne tages fra en JSON-streng i HTTP body'en*/
-    public String addIngredientJson(String body) {
-        JSONObject jsonObject = new JSONObject(body);
-        IngredientDTO ingredient = new IngredientDTO(jsonObject.getInt("id"), jsonObject.getString("name"), jsonObject.getDouble("amount"));
-        IngredientDAO.getInstance().addIngredient(ingredient);
-
-        return "Ingredient added";
-    }
-
-    @PUT
-    /*Variablerne tages fra en JSON-streng i HTTP body'en*/
-    public String setIngredient(String body) {
-        JSONObject jsonObject = new JSONObject(body);
-        IngredientDTO ingredient = new IngredientDTO(jsonObject.getInt("id"), jsonObject.getString("name"), jsonObject.getDouble("amount"));
-        IngredientDAO.getInstance().setIngredient(ingredient);
-
-        return "Ingredient updated";
-    }
-
-    @DELETE
-    @Path("{id}")
-    /*Variablen id tages fra URL'en
-     * Eksempel på URL: DELETE localhost:8080/Lektion10/rest/ingredient/3 */
-    public String deleteIngredient(@PathParam("id") int id) {
-        IngredientDAO.getInstance().deleteIngredient(id);
-        return "Ingredient deleted";
-    }
 }
