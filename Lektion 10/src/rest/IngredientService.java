@@ -19,7 +19,7 @@ public class IngredientService {
 
     @GET
     @Path("{id}")
-    /*Eksempel på URL: GET localhost:8080/Lektion10/rest/ingredient/3 */
+    /*Eksempel på HTTP kald: GET localhost:8080/Lektion10/rest/ingredient/3 */
     public String getIngredient(@PathParam("id") int id) {
         String returnString;
         IngredientDTO ingredient = IngredientDAO.getInstance().getIngredient(id);
@@ -44,7 +44,7 @@ public class IngredientService {
     @POST
     @Path("query")
     /*Variablerne tages fra URL'en
-    * Eksempel på URL: POST localhost:8080/Lektion10/rest/ingredient/query?id=4&name=sukker&amount=45 */
+    * Eksempel på HTTP kald: POST localhost:8080/Lektion10/rest/ingredient/query?id=4&name=sukker&amount=45 */
     public String addIngredientQuery(@QueryParam("id") String id, @QueryParam("name") String name, @QueryParam("amount") String amount) {
         IngredientDTO ingredient = new IngredientDTO(Integer.parseInt(id), name, Double.parseDouble(amount));
         IngredientDAO.getInstance().addIngredient(ingredient);
@@ -55,7 +55,7 @@ public class IngredientService {
     @POST
     @Path("{id}/{name}/{amount}")
     /*Variablerne tages fra URL'en
-     * Eksempel på URL: POST localhost:8080/Lektion10/rest/ingredient/4/sukker/45 */
+    * Eksempel på HTTP kald: POST localhost:8080/Lektion10/rest/ingredient/4/sukker/45 */
     public String addIngredientPath(@PathParam("id") String id, @PathParam("name") String name, @PathParam("amount") String amount) {
         IngredientDTO ingredient = new IngredientDTO(Integer.parseInt(id), name, Double.parseDouble(amount));
         IngredientDAO.getInstance().addIngredient(ingredient);
