@@ -1,8 +1,10 @@
 package rest;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
 
 @Path("hello")
 public class HelloService {
@@ -13,6 +15,7 @@ public class HelloService {
 	}
 	
 	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
 	public String postHello(String name){
 		/*Variablen name kommer fra HTTP body'en*/
 		return "Hello " + name;
