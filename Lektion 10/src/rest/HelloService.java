@@ -14,8 +14,8 @@ public class HelloService {
 	
 	@POST
 	public String postHello(String name){
+		/*Variablen name kommer fra HTTP body'en*/
 		return "Hello " + name;
-		
 	}
 
 }

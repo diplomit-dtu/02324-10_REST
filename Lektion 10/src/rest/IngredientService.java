@@ -20,6 +20,7 @@ public class IngredientService {
 
     @GET
     @Path("{id}")
+    /*Eksempel på URL: GET localhost:8080/Lektion10/rest/ingredient/3 */
     public String getIngredient(@PathParam("id") int id) {
         String returnString;
         IngredientDTO ingredient = IngredientDAO.getInstance().getIngredient(id);
@@ -33,23 +34,8 @@ public class IngredientService {
 
     @POST
     @Path("form")
+    /*Variablerne tages fra HTTP body med encoding x-www-form-urlencoded */
     public String addIngredientForm(@FormParam("id") String id, @FormParam("name") String name, @FormParam("amount") String amount) {
-        return addIngredient(id,name,amount);
-    }
-
-    @POST
-    @Path("query")
-    public String addIngredientQuery(@QueryParam("id") String id, @QueryParam("name") String name, @QueryParam("amount") String amount) {
-        return addIngredient(id,name,amount);
-    }
-
-    @POST
-    @Path("{id}/{name}/{amount}")
-    public String addIngredientPath(@PathParam("id") String id, @PathParam("name") String name, @PathParam("amount") String amount) {
-        return addIngredient(id,name,amount);
-    }
-
-    private String addIngredient(String id, String name, String amount){
         IngredientDTO ingredient = new IngredientDTO(Integer.parseInt(id), name, Double.parseDouble(amount));
         IngredientDAO.getInstance().addIngredient(ingredient);
 
@@ -57,7 +43,29 @@ public class IngredientService {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("query")
+    /*Variablerne tages fra URL'en
+    * Eksempel på URL: POST localhost:8080/Lektion10/rest/ingredient/query?id=4&name=sukker&amount=45 */
+    public String addIngredientQuery(@QueryParam("id") String id, @QueryParam("name") String name, @QueryParam("amount") String amount) {
+        IngredientDTO ingredient = new IngredientDTO(Integer.parseInt(id), name, Double.parseDouble(amount));
+        IngredientDAO.getInstance().addIngredient(ingredient);
+
+        return "Ingredient added";
+    }
+
+    @POST
+    @Path("{id}/{name}/{amount}")
+    /*Variablerne tages fra URL'en
+     * Eksempel på URL: POST localhost:8080/Lektion10/rest/ingredient/4/sukker/45 */
+    public String addIngredientPath(@PathParam("id") String id, @PathParam("name") String name, @PathParam("amount") String amount) {
+        IngredientDTO ingredient = new IngredientDTO(Integer.parseInt(id), name, Double.parseDouble(amount));
+        IngredientDAO.getInstance().addIngredient(ingredient);
+
+        return "Ingredient added";
+    }
+
+    @POST
+    /*Variablerne tages fra en JSON-streng i HTTP body'en*/
     public String addIngredientJson(String body) {
         JSONObject jsonObject = new JSONObject(body);
         IngredientDTO ingredient = new IngredientDTO(jsonObject.getInt("id"), jsonObject.getString("name"), jsonObject.getDouble("amount"));
@@ -67,7 +75,7 @@ public class IngredientService {
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
+    /*Variablerne tages fra en JSON-streng i HTTP body'en*/
     public String setIngredient(String body) {
         JSONObject jsonObject = new JSONObject(body);
         IngredientDTO ingredient = new IngredientDTO(jsonObject.getInt("id"), jsonObject.getString("name"), jsonObject.getDouble("amount"));
@@ -78,6 +86,8 @@ public class IngredientService {
 
     @DELETE
     @Path("{id}")
+    /*Variablen id tages fra URL'en
+     * Eksempel på URL: DELETE localhost:8080/Lektion10/rest/ingredient/3 */
     public String deleteIngredient(@PathParam("id") int id) {
         IngredientDAO.getInstance().deleteIngredient(id);
         return "Ingredient deleted";
